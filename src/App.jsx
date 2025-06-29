@@ -20,15 +20,19 @@ export const App = () => {
 
         try {
           const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+            `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${
+              import.meta.env.VITE_OPENCAGE_API_KEY
+            }`
           );
           const data = await response.json();
 
+          const components = data.results[0]?.components;
+
           const city =
-            data.address.city ||
-            data.address.town ||
-            data.address.village ||
-            data.address.county;
+            components?.city ||
+            components?.town ||
+            components?.village ||
+            components?.county;
 
           if (city) {
             setInputValue(city);
@@ -36,7 +40,7 @@ export const App = () => {
             console.warn("Город не найден, вот что пришло:", data);
           }
         } catch (error) {
-          console.error("Ошибка при обратном геокодировании:", error);
+          console.error("Ошибка при геокодировании:", error);
         }
       },
       (error) => {
