@@ -1,6 +1,6 @@
 import { API_KEY } from "../App";
 
-const BASE_URL = "http://api.weatherapi.com/v1/";
+const BASE_URL = "https://api.weatherapi.com/v1/";
 
 const API_OPTIONS = {
   method: "GET",
